@@ -7,4 +7,6 @@
 *.c~
 *.bmp
 *~
+/learn-c-thw
+/learn-c-thw-video
 
