@@ -1,0 +1,18 @@
+0. TODO
+Besides 4 × 4 (which are Game of Fifteen’s dimensions), what other dimensions does the framework allow?
+The game allows for any integer between 3 and 9, as long as the integers chosen are equal.
+
+1. TODO
+With what sort of data structure is the game’s board represented?
+A two dimensional array.
+
+2. TODO
+What function is called to greet the player at game’s start?
+greet(); 
+
+3. TODO
+What functions do you apparently need to implement?
+init
+draw
+move
+won

@@ -1,0 +1,14 @@
+fifteen: fifteen.c
+	clang -ggdb3 -O0 -std=c11 -Wall -Werror -o fifteen fifteen.c -lcs50 -lm 
+
+test: test.c
+	clang -ggdb3 -O0 -std=c11 -Wall -Werror -o test test.c -lcs50 -lm 
+
+insertion-sort: insertion-sort.c
+	clang -ggdb3 -O0 -std=c11 -Wall -Werror -o insertion-sort insertion-sort.c -lcs50 -lm 
+
+insertIntoArray: insertIntoArray.c
+	clang -ggdb3 -O0 -std=c11 -Wall -Werror -o insertIntoArray insertIntoArray.c -lcs50 -lm 
+
+clean:
+	rm -f *.o a.out core fifteen log.txt

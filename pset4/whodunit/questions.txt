@@ -1,0 +1,51 @@
+1.  TODONE
+What’s stdint.h?
+stdint.h header extends the types of integers with a number of fixed width integers.
+2.  TODONE
+What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+Variables become sized differently depending on the computer processor and compiler. So the same code may turn out differently on a different system. By making new integer types with a greater level of specificty developers are able to remove ambiguity for compilers independent of the computer system.
+3.  TODONE
+How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively?
+BYTE: 1 
+DWORD: 4
+LONG: 4
+WORD: 2
+
+4.  TODONE
+What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? Leading bytes used to identify file formats (with high probability) are generally called "magic numbers."
+BM
+
+5.  TODONE
+What’s the difference between bfSize and biSize?
+bfSize is the size of the bmp file itself.
+biSize is the size required by the structure in BITMAPINFOHEADER.
+
+6.  TODONE
+What does it mean if biHeight is negative?
+from microsoft website - "the bitmap is a top-down DIB (device independent bitmap) and its origin is the upper-left corner" essentially it provides information on how to read the image when scanning through the file.
+
+7.  TODONE
+What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)?
+biBitCount 
+
+8.  TODONE
+Why might fopen return NULL in lines 24 and 32 of copy.c?
+The user when running the copy command may forget to specify arguments. Doing so would 
+mean there would be no inputs and outputs for the program to run. These inputs and outputs are required for lines 24 and 32 to open, read and write.
+
+9.  TODONE
+Why is the third argument to fread always 1 in our code?
+Because there will only ever be one data being read or written: The BITMAPINFOHEADER or the BITMAPFILEHEADER.
+
+10. TODONE
+What value does line 65 of copy.c assign to padding if bi.biWidth is 3?
+3
+
+11. TODO
+What does fseek do?
+fseek() allows you to access a file's data from a specific point within the file. 
+it works like this:
+fseek( file, point in file to seek forward from starting point, starting point); 
+
+12. TODO
+What is SEEK_CUR?
