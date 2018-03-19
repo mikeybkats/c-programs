@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
   int i = 0;
   unsigned char *buffer;
   buffer = (unsigned char *)malloc(sizeof(unsigned char) * 512); 
-  int jpegFound = 0;
-  int j;
+  int jpegFound;
+
   while (fread(buffer, sizeof(buffer), 1, inptr) == 1)
   {
     if (buffer[0] == 0xff && 
@@ -39,41 +39,43 @@ int main(int argc, char *argv[])
         buffer[2] == 0xff &&
         (buffer[3] & 0xf0) == 0xe0)
     { 
-      j = 0;
       jpegFound = 1;
       char filename[8];
       sprintf(filename, "%03i.jpg", i++);
-      /*puts(filename);*/
+      puts(filename);
       FILE *img = fopen(filename, "w");
-      
-      j++;
 
-      int location = ftell(inptr);
-      while(jpegFound && !feof(inptr))
+      // write first block to output file
+      fwrite(buffer, sizeof(buffer), 1, img);
+
+      fread(buffer, sizeof(buffer),1, inptr);
+
+      while(jpegFound)
       {
         fwrite(buffer, sizeof(buffer), 1, img);
         fread(buffer, sizeof(buffer),1, inptr);
-        j++;
         if (buffer[0] == 0xff && 
             buffer[1] == 0xd8 && 
             buffer[2] == 0xff &&
             (buffer[3] & 0xf0) == 0xe0)
         {
-          /*printf("%s: %lu\n", filename, (j*sizeof(buffer))/1000);*/
-          printf("number of blocks in %s: %i\n", filename, j);
           jpegFound = 0;
-          fseek( inptr, location, SEEK_SET); 
         }
       }
-      fclose(img);
+
+      fclose(img);  
     }
   }
+
   if (feof(inptr))
   {
     free(buffer);
+    // close infile
     fclose(inptr);
+    // success
     return 0;
   }
+
   else
   {
     // some other error interrupted the read
