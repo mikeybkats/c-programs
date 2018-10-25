@@ -17,14 +17,6 @@ int *makeArray(int length){
   return array;
 }
 
-// insertion sort
-// portion the array in two sides sorted and unsorted
-// set number aside 
-// scan sorted portion of array
-// if number is less than any number in 
-// the sorted portion of the array 
-// insert the number before that number in the array
-
 void insertionSort(int unsArr[], int d){
   // call the first element in the unsArr sorted
   int temp;
@@ -47,7 +39,7 @@ void insertionSort(int unsArr[], int d){
     }
   }
 
-  printf("[");
+  printf("Sorted Array: [ ");
   for(i = 0; i < d; i++){
     printf("%i, ", unsArr[i]);
   }
@@ -56,8 +48,10 @@ void insertionSort(int unsArr[], int d){
 
 int main( int argc, char *argv[] )
 {
+  (void)argc;
+
   if(!argv[1]){
-    printf("Usage: enter an argument to determine array size. Program will generate a random array of numbers to sort.");
+    printf("Usage: enter an argument to determine array size. Program will generate a random array of numbers to sort.\n");
     return 1;
   }
   // d is the length of the random array to create
@@ -65,7 +59,7 @@ int main( int argc, char *argv[] )
   d = atoi(argv[1]);
 
   int *newArray = makeArray(d);  
-  printf("[ ");
+  printf("Unsorted Array: [ ");
   for(int i = 0; i < d; i++){
     printf("%i, ", newArray[i]);
   }

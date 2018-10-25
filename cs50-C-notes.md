@@ -422,7 +422,7 @@ columns needs to be divisible by the number of group size bytes. divide columns 
 #### dif *file.file file.file*- is a tool for comparing two files line by line.  
 if the files are the same there is no output.
 
-##Structs  
+## Structs  
 Structs allow you to arrange the bytes in a data structure so the order takes on new meaning and becomes a kind of structure. It's like timbre in music. It's what makes a trumpet sound like a trumpet. Or in computer science what makes a .psd a .psd and a .bmp a .bmp or different.
 
 ```
@@ -438,5 +438,46 @@ allow us to do. Rather than think of some file as one long sequence of bytes, we
 instead think of it as a sequence of structs."  
 ``` 
 
+# Data Structures
+## Linked Lists  
+- A clever combination of elements that allows the creation of a kind of dynamically sized array.
+- each element in this data structure is a node and each node points to the next node
+- each node is a struct with two elements. the first is some data type, the second is a pointer to another node of the same type:  
+
+```c 
+typedef struct sllist 
+{
+  VALUE val;
+  struct sllist* next;
+}
+sllnode;
+```
+
+##### making and using a linked list inolves:
+1 - creating the list 
+2 - searching the list to find an element  
+3 - inserting an element into the linked list  
+4 - deleting an element  
+5 - deleting the list  
+
+##### creation  
+```c
+
+sllnode* create(VALUE Val);
+
+// dynamically allocate memory for sllnode  
+(sllnode*)malloc(sslnode);
+
+// make sure sllnode != NULL 
+
+// initialize VALUE: fill in the VALUE field 
+// initialize next 
+
+// return pointer to node  
+
+```  
 
 
+
+
+ 

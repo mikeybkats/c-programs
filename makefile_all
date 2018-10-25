@@ -1,0 +1,17 @@
+# compiler to use
+CC = clang
+
+# flags to pass compiler
+CFLAGS = -fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -Qunused-arguments -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wshadow -g
+
+SRC = src
+TARGET = main
+
+fget_example: $(CC) $(CFLAGS) fget_example -o fget_example.c
+
+fscanf_example: $(CC) $(CFLAGS) fscanf_example -o fscanf_example.c
+
+all: $(TARGET)
+
+$(TARGET): $(src)/$(TARGET).c
+	$(CC) $(CFLAGS) $(TARGET) -o $(TARGET).c
