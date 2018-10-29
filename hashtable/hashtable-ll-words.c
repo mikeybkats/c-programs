@@ -64,9 +64,13 @@ void append(llnode_t *head, char *data){
   {
     printf("word does not exist yet\n");
     printf("appending word: %s\n", data);
-    head->word = strdup(data);
+
+    char *dupWord = strdup(data);
+    head->word = dupWord;
     head->next = NULL;
 
+    free(dupWord);
+    free(data);
     return;
   }
 
@@ -74,10 +78,17 @@ void append(llnode_t *head, char *data){
     current = current->next;
   }
   
-  current->next = malloc(sizeof(llnode_t));
+  llnode_t *next = malloc(sizeof(llnode_t));
+  current->next = next;
   printf("Appending word: %s\n", data);
-  current->next->word = strdup(data);
+
+  char *dupWord = strdup(data);
+  current->next->word = dupWord;
   current->next->next = NULL;
+
+  free(dupWord);
+  free(next);
+  free(data);
 }
 
 char *toLowerCase(char *word){
@@ -96,18 +107,20 @@ bool load(const char *path){
     while(word != EOF){
       char *wordString = buf;
       wordString = toLowerCase(wordString);
+      wordString = strdup(wordString); 
 
       int hashValue = hash(wordString);
 
       llnode_t *node = malloc(sizeof(llnode_t));
-      node->word = strdup(wordString);
+      node->word = wordString;
       node->next = NULL;
 
       if(hashtable[hashValue] != NULL){
         printf("A node exists already\n");
-        append(node, wordString);
+        append(node, strdup(wordString));
         printf("Adding node: %s\nAdding node to hashtable index: %i\n\n", node->word, hashValue);
         free(node);
+        free(wordString);
       } 
       else { 
         printf("Node does not exist.\n");
@@ -135,12 +148,14 @@ bool unload(){
         while(current != NULL){
           tmp = current->next;
           printf("freeing: %s\n", current->word);
+          free(current->word);
           free(current);
           current = tmp;
         }
+        tmp = current;
+        free(tmp);
       }
     }
-    free(tmp);
     return true;
   }
   return false;
@@ -173,5 +188,6 @@ int main(int argc, char *argv[])
   } else {
     printf("\nFailed to unload properly.\n");
   }
+
   return(0);
 }
