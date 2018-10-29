@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdbool.h>
+
+#define HASHTABLE 100;
 
 typedef struct llnode {
   char *word;
@@ -89,8 +92,25 @@ void append(llnode_t *head, char *data){
   current->next->next = NULL;
 }
 
+unsigned long hash(char *word)
+{
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *word++))
+    {
+        printf("int c = %i\n", c); // only to visualize function
+    
+        hash = ((hash << 5) + hash) + tolower(c);
+        printf("hash = %lu\n\n", hash); // only to visualize function
+    }
+    return hash % HASHTABLE;
+} 
+
 int main(int argc, char *argv[])
 {
+  (void) argc;
+
   llnode_t *head = malloc(sizeof(llnode_t));
   head->word = NULL;
   head->next = NULL;
@@ -104,6 +124,10 @@ int main(int argc, char *argv[])
   while(textWord != EOF){
     append( head, buffer);
     textWord = fscanf(text, "%29[a-zA-Z]%*[^a-zA-Z]", buffer);
+
+    int index = hash(buffer);
+    printf("index = %i\n", index);
+
   }
 
   print(head);
