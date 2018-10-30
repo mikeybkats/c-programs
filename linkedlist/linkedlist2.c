@@ -59,8 +59,10 @@ int main(void)
   /*}*/
 
   append(head, 10);
-  prepend(&head, 2);
-  prepend(&head, 1);
+  append(head, 10);
+  append(head, 10);
+  /*prepend(&head, 2);*/
+  /*prepend(&head, 1);*/
 
   print_list(head);
 
