@@ -60,35 +60,18 @@ bool search(llnode_t *head, char *searchWord){
 void append(llnode_t *head, char *data){
   llnode_t *current = head;
 
-  if(head->word == NULL)
-  {
-    printf("word does not exist yet\n");
-    printf("appending word: %s\n", data);
-
-    char *dupWord = strdup(data);
-    head->word = dupWord;
-    head->next = NULL;
-
-    free(dupWord);
-    free(data);
-    return;
-  }
-
   while(current->next != NULL){
     current = current->next;
   }
   
   llnode_t *next = malloc(sizeof(llnode_t));
   current->next = next;
-  printf("Appending word: %s\n", data);
 
   char *dupWord = strdup(data);
   current->next->word = dupWord;
   current->next->next = NULL;
 
   free(dupWord);
-  free(next);
-  free(data);
 }
 
 char *toLowerCase(char *word){
@@ -96,6 +79,25 @@ char *toLowerCase(char *word){
     buf[i] = tolower(word[i]);
   }
   return buf;
+}
+
+llnode_t *createNode(char *string){
+  llnode_t *node = malloc(sizeof(llnode_t)); 
+  char *word = strdup(string);
+
+  node->word = word;
+  node->next = NULL;
+
+  return node;
+}
+
+void destroyNode(llnode_t *node){
+  if(node != NULL){
+    if(node->word != NULL){
+      free(node->word);
+    }
+  }
+  free(node);
 }
 
 bool load(const char *path){
@@ -107,24 +109,20 @@ bool load(const char *path){
     while(word != EOF){
       char *wordString = buf;
       wordString = toLowerCase(wordString);
-      wordString = strdup(wordString); 
 
       int hashValue = hash(wordString);
 
-      llnode_t *node = malloc(sizeof(llnode_t));
-      node->word = wordString;
-      node->next = NULL;
+      llnode_t *node = createNode(wordString);
 
       if(hashtable[hashValue] != NULL){
-        printf("A node exists already\n");
-        append(node, strdup(wordString));
-        printf("Adding node: %s\nAdding node to hashtable index: %i\n\n", node->word, hashValue);
+        /*printf("A node exists already\n");*/
+        append(node, wordString);
+        printf("Appending node: %s\nAppending node to hashtable index: %i\n\n", node->word, hashValue);
         free(node);
-        free(wordString);
       } 
       else { 
-        printf("Node does not exist.\n");
-        printf("Adding node: %s\nAdding node to hashtable index: %i\n\n", node->word, hashValue);
+        /*printf("Node does not exist.\n");*/
+        printf("Creating node: %s\nAdding node to hashtable index: %i\n\n", node->word, hashValue);
         hashtable[hashValue] = node;
       }
 
@@ -148,16 +146,17 @@ bool unload(){
         while(current != NULL){
           tmp = current->next;
           printf("freeing: %s\n", current->word);
-          free(current->word);
-          free(current);
+          destroyNode(current);
           current = tmp;
         }
         tmp = current;
-        free(tmp);
+        destroyNode(tmp);
       }
     }
+    fclose(words);
     return true;
   }
+  fclose(words);
   return false;
 }
 
